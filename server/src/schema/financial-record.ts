@@ -1,7 +1,7 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose from "mongoose";
 
 
-export interface IFinancialRecord extends Document {
+interface FinancialRecord {
   userId: string;
   date: Date;
   description: string;
@@ -10,7 +10,7 @@ export interface IFinancialRecord extends Document {
   paymentMethod: string;
 }
 
-const financialRecordSchema = new Schema<IFinancialRecord>({
+const financialRecordSchema = new mongoose.Schema<FinancialRecord>({
   userId: { type: String, required: true },
   date: { type: Date, required: true },
   description: { type: String, required: true },
@@ -19,7 +19,7 @@ const financialRecordSchema = new Schema<IFinancialRecord>({
   paymentMethod: { type: String, required: true },
 });
 
-const FinancialRecordModel = mongoose.model<IFinancialRecord>(
+const FinancialRecordModel = mongoose.model<FinancialRecord>(
   "FinancialRecord",
   financialRecordSchema
 );

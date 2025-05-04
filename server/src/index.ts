@@ -4,8 +4,11 @@ dotenv.config();
 import express, {Express} from "express";
 import mongoose from "mongoose";
 import financialRecordRouter from "./routes/financial-records";
+import cors from "cors";
 
 const app: Express = express();
+app.use(cors());
+
 const port = process.env.PORT || 3001;
 
 app.use(express.json());

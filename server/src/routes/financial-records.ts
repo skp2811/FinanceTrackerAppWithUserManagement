@@ -1,8 +1,17 @@
-import express, { Request, Response } from "express";
+//import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
+
 import FinancialRecordModel from "../schema/financial-record";
 
 const router = express.Router();
-
+router.use((req: Request, res: Response, next: NextFunction) => {
+    if (req.method === "OPTIONS") {
+      res.sendStatus(200);
+    } else {
+      next();
+    }
+  });
+  
 // get request
 router.get("/getAllByUserID/:userId", async (req: Request, res: Response) => {
   try {
