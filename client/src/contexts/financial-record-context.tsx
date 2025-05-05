@@ -13,6 +13,7 @@ interface FinancialRecord {
     paymentMethod: string;
   }
 
+  // here defining the context type
   interface FinancialRecordsContextType {
     records: FinancialRecord[];
     addRecord: (record: FinancialRecord) => void;
@@ -49,7 +50,7 @@ interface FinancialRecord {
            } 
         } catch (err) {}
       };
-
+      
 
       return (
         <FinancialRecordsContext.Provider value={{ records,addRecord }}>
