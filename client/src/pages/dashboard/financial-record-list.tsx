@@ -1,8 +1,9 @@
 /*export const FinancialRecordList = () => {
     return <div>Record List</div>
 };*/
-import { useMemo } from "react";
-import { FinancialRecord,useFinancialRecords } from "../../contexts/financial-record-context";
+//import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { FinancialRecord, useFinancialRecords } from "../../contexts/financial-record-context";
 import { useTable, Column, CellProps, Row } from "react-table";
 
     interface EditableCellProps extends CellProps<FinancialRecord> {
@@ -12,20 +13,34 @@ import { useTable, Column, CellProps, Row } from "react-table";
 
     // for making a separate component
     const EditableCell: React.FC<EditableCellProps> = ({value: initialValue, row, column, updateRecord, editable}) => {
-        const [isEditing, setEditing] = useState(false)
-        const [value,setValue] = useState(initialValue)
+        const [isEditing, setIsEditing] = useState(false)
+        const [value, setValue] = useState(initialValue)
+
+        const onBlur = () => {
+            setIsEditing(false);
+            updateRecord(row.index,column.id,value);
+        };
 
         return (
-               <div onClick={() => editable && setEditing(true)}> 
-                   {isEditing ? 
-                   <input value={value} onChange={(e) => setValue(e.target.value)} autoFocus style={{width: "100%"}}/>
-                    : typeof value === "string" 
+               <div 
+                 onClick={() => editable && setIsEditing(true)}
+                 style={{cursor: editable ? "pointer" : "default" }}
+                 > 
+                   {isEditing ?( 
+                   <input 
+                       value={value}
+                       onChange={(e) => setValue(e.target.value)}
+                       autoFocus 
+                       onBlur={onBlur}
+                       style={{width: "100%"}}
+                       />
+                    ) : typeof value === "string" 
                     ? (value)
                     : (value.toString())}
-                    </div>)
-    }
+                    </div>
+                    );
+    };
     
-
 
     export const FinancialRecordList = () => {
     const { records } = useFinancialRecords();
@@ -34,42 +49,42 @@ import { useTable, Column, CellProps, Row } from "react-table";
         {
             Header: "Description",
             accessor: "description",
-            cell: (props) => (
+            Cell: (props) => (
                 <EditableCell {...props} updateRecord={() => null} editable={true} />
             ),
         },
         {
             Header: "Amount",
             accessor: "amount",
-            cell: (props) => (
+            Cell: (props) => (
                 <EditableCell {...props} updateRecord={() => null} editable={true} />
             ),
         },
         {
             Header: "Category",
             accessor: "category",
-            cell: (props) => (
+            Cell: (props) => (
                 <EditableCell {...props} updateRecord={() => null} editable={true} />
             ),
         },
         {
             Header: "Payment Method",
             accessor: "paymentMethod",
-            cell: (props) => (
+            Cell: (props) => (
                 <EditableCell {...props} updateRecord={() => null} editable={true} />
             ),
         },
         {
             Header: "Date",
             accessor: "date",
-            cell: (props) => (
+            Cell: (props) => (
                 <EditableCell {...props} updateRecord={() => null} editable={false} />
             ),
         },
         {
             Header: "Delete",
-            accessor: "delete",
-            cell: ({row}) => <button onClick={() => null} className="button">
+            id: "delete",
+            Cell: ({row}) => <button onClick={() => null} className="button">
                 {" "}
                 Delete {" "}
             </button>

@@ -4,6 +4,8 @@ import { useUser } from '@clerk/clerk-react'
 
 
 // use interface that context will contain, that is actually same as we use in schema so copy from there
+
+
 export interface FinancialRecord {
     id?:string; // in backend dont use it bcz in that automatic generate in mongodb
     userId: string;
@@ -33,7 +35,7 @@ export interface FinancialRecord {
     }) => {
       // create state
       const [records, setRecords] = useState<FinancialRecord[]>([]);
-      const { user } = useUser(); // use useUser that we get user from clerk
+      const { user } = useUser(); // use useUser that we get user from clerk i.e. user id get from here
       
       // now add this function for showing the list of database
       const fetchRecord = async () => {
@@ -73,7 +75,7 @@ export interface FinancialRecord {
       
 
       return (
-        <FinancialRecordsContext.Provider value={{ records,addRecord }}>
+        <FinancialRecordsContext.Provider value={{ records, addRecord }}>
           {" "}
           {children}
         </FinancialRecordsContext.Provider>

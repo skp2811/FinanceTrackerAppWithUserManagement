@@ -7,11 +7,11 @@ import financialRecordRouter from "./routes/financial-records";
 import cors from "cors";
 
 const app: Express = express();
-app.use(cors());
-
 const port = process.env.PORT || 3001;
 
+
 app.use(express.json());
+app.use(cors());
 
 const mongoURI: string = process.env.MONGODB_URI || "";
 

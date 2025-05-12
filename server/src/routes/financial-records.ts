@@ -15,6 +15,8 @@ router.get("/getAllByUserID/:userId", async (req: Request, res: Response) => {
       ? res.status(200).send(records)
       : res.status(404).send("No records found for the user.");
   } catch (err) {
+    
+    console.error("Error fetching records:", err);
     res.status(500).send(err);
   }
 });
@@ -27,9 +29,13 @@ router.post("/", async (req: Request, res: Response) => {
     const savedRecord = await newRecord.save();
     res.status(201).send(savedRecord);
   } catch (err) {
+    console.error("POST Error:", err);
     res.status(500).send(err);
   }
 });
+
+
+
 
 // put request
 router.put("/:id", async (req: Request, res: Response) => {
