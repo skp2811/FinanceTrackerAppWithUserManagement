@@ -4,7 +4,7 @@ import { useUser } from '@clerk/clerk-react'
 
 
 // use interface that context will contain, that is actually same as we use in schema so copy from there
-interface FinancialRecord {
+export interface FinancialRecord {
     id?:string; // in backend dont use it bcz in that automatic generate in mongodb
     userId: string;
     date: Date;
