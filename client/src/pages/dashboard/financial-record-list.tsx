@@ -43,54 +43,63 @@ import { useTable, Column, CellProps, Row } from "react-table";
     
 
     export const FinancialRecordList = () => {
-    const { records } = useFinancialRecords();
+    const { records, updateRecord,deleteRecord } = useFinancialRecords();
 
+    const updateCellRecord = (rowIndex: number, columnId: string, value:any) => {
+        const id = records[rowIndex]._id;
+        updateRecord(id ?? "",{...records[rowIndex], [columnId]: value});
+    };
+    
     const columns : Array<Column<FinancialRecord>> = useMemo(() => [
         {
             Header: "Description",
             accessor: "description",
             Cell: (props) => (
-                <EditableCell {...props} updateRecord={() => null} editable={true} />
+                <EditableCell 
+                    {...props}
+                     updateRecord={updateCellRecord} 
+                     editable={true} />
             ),
         },
         {
             Header: "Amount",
             accessor: "amount",
             Cell: (props) => (
-                <EditableCell {...props} updateRecord={() => null} editable={true} />
+                <EditableCell {...props} updateRecord={updateCellRecord} editable={true} />
             ),
         },
         {
             Header: "Category",
             accessor: "category",
             Cell: (props) => (
-                <EditableCell {...props} updateRecord={() => null} editable={true} />
+                <EditableCell {...props} updateRecord={updateCellRecord} editable={true} />
             ),
         },
         {
             Header: "Payment Method",
             accessor: "paymentMethod",
             Cell: (props) => (
-                <EditableCell {...props} updateRecord={() => null} editable={true} />
+                <EditableCell {...props} updateRecord={updateCellRecord} editable={true} />
             ),
         },
         {
             Header: "Date",
             accessor: "date",
             Cell: (props) => (
-                <EditableCell {...props} updateRecord={() => null} editable={false} />
+                <EditableCell {...props} updateRecord={updateCellRecord} editable={false} />
             ),
         },
         {
             Header: "Delete",
             id: "delete",
-            Cell: ({row}) => <button onClick={() => null} className="button">
+            Cell: ({row}) => <button onClick={() => deleteRecord(row.original._id ?? "")}
+             className="button">
                 {" "}
-                Delete {" "}
+                Delete
             </button>
         },
     ],
-    []
+    [records]
 );
     
     const {getTableProps, getTableBodyProps,headerGroups,rows,prepareRow} = useTable({
